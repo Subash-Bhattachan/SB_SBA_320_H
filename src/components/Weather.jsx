@@ -8,6 +8,10 @@ import rain_icon from "../assets/rain.png";
 import snow_icon from "../assets/snow.png";
 import wind_icon from "../assets/wind.png";
 import humidity_icon from "../assets/humidity.png";
+import feels_like_icon from "../assets/temperature-feels-like.png";
+import current_location_icon from "../assets/current_location.png";
+
+
 
 const Weather = () => {
     const inputRef = useRef();
@@ -31,7 +35,7 @@ const Weather = () => {
     }
 
     const search = async (city) => {
-        if(city==="") {
+        if (city === "") {
             alert("Enter City Name");
             return;
         }
@@ -40,7 +44,7 @@ const Weather = () => {
             const response = await fetch(url);
             const data = await response.json();
 
-            if(!response.ok) {
+            if (!response.ok) {
                 alert(data.message);
                 return;
             }
@@ -52,92 +56,83 @@ const Weather = () => {
                 windSpeed: data.wind.speed,
                 temperature: Math.floor(data.main.temp),
                 location: data.name,
-                icon: icon
+                actual: data.main.feels_like,
+                description: data.weather[0].description,
+                icon: icon,
+                dateTime: new Date((data.dt + data.timezone) * 1000).toLocaleString("en-US", {
+                    timeZone: "UTC",
+                }),
 
-            })
+                });
 
-
-
-        } catch (error) {
-            setWeatherData(false);
-            console.error("Error in fetching the weather data")
-
+            } catch (error) {
+                setWeatherData(false);
+                console.error("Error in fetching the weather data")
+            }
         }
+
+    useEffect(() => {
+            search("Boston");
+        }, [])
+
+
+        return (
+
+            <div className="app">
+                <div className="weather">
+                    <div className="search-bar">
+                        <input
+                            ref={inputRef}
+                            type="text"
+                            placeholder="Search" />
+                        <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)} />
+
+                    </div>
+
+                    {weatherData ? <>
+
+                        <img src={weatherData.icon} alt="" className="weather-icon" />
+                        <p className="temperature">{weatherData.temperature} °F</p>
+                        <p className="location">{weatherData.location}</p>
+                        <p className="date-time">{weatherData.dateTime}</p>
+
+                        <div className="weather-data">
+                            <div className="col">
+
+                                <div >
+                                    <img src={humidity_icon} alt="" />
+                                    <p>{weatherData.humidity} %</p>
+                                    <span>Humidity</span>
+
+                                    <img src={feels_like_icon} alt="" />
+                                    <p>{weatherData.actual} °F</p>
+                                    <span>Real Feel</span>
+                                </div>
+
+                            </div>
+
+
+                            <div className="col">
+
+                                <div>
+                                    <img src={wind_icon} alt="" />
+                                    <p>{weatherData.windSpeed} mph</p>
+                                    <span>Wind</span>
+
+                                    <img src={current_location_icon} alt="" />
+                                    <p>{weatherData.description}</p>
+                                    <span>Current Status</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </> : <></>}
+
+                </div>
+            </div>
+
+        )
     }
 
-    useEffect(()=>{
-        search("Boston");
-    }, [])
 
-
-
-    // const [city, setCity] = useState(null);
-    // const [search, setSearch] = useState("Kathmandu");
-
-    // useEffect(() => {
-    //     const fetchApi = async () => {
-    //         const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=a3c98566746d0d9082d534c03af77571`
-    //         const response = await fetch(url);
-    //         console.log(response)
-    //         const resJson = await response.json();
-    //         //console.log(resJson);
-    //         setCity(resJson.main);
-    //     };
-
-    //     fetchApi();
-
-    // }, [search])
-
-
-    return (
-
-        <div className="app">
-            <div className="weather">
-                <div className="search-bar">
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        placeholder="Search" />
-                    <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)}/>
-
-                </div>
-                
-                {weatherData?<>
-
-                    <img src={weatherData.icon} alt="" className="weather-icon" />
-                <p className="temperature">{weatherData.temperature}° F</p>
-                <p className="location">{weatherData.location}</p>
-
-                <div className="weather-data">
-                    <div className="col">
-                        <img src={humidity_icon} alt="" />
-                        <div>
-                            <p>{weatherData.humidity}%</p>
-                            <span>Humidity</span>
-                        </div>
-                    </div>
-
-
-                    <div className="col">
-                        <img src={wind_icon} alt="" />
-                        <div>
-                            <p>3.6 km/hr</p>
-                            <span>Wind Speed</span>
-                        </div>
-                    </div>
-                </div>
-                
-                </>:<></>}
-
-
-                
-
-
-            </div>
-        </div>
-
-    )
-}
-
-
-export default Weather
+    export default Weather
