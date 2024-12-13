@@ -6,14 +6,14 @@ Simple overview of use/purpose.
 
 This SBA is to put everything we have learned to the test and apply it to a practical web application.
 
-The content, context, and objective of the application is entirely up to us. We are asked to bee creative, and think of something that will both allow us to demonstrate the skills we have acquired thus far and solve a need (practical or fictional).
+The content, context, and objective of the application is entirely up to the developer. We are asked to be creative, and think of something that will both allow us to demonstrate the skills we have acquired thus far and solve a need (practical or fictional).
 
 
 ## The application must meet these requirements to pass as a Minimum Viable Product:
 * It is built with HTML, CSS, JavaScript, REACT, and Redux Toolkit.
 * It is hosted on Heroku or Netlify.
 * There are frequent commits to GitHub.
-* A README.md file is in GitHub repository with: Explanations of the technologies used, Explanations of the approach taken, A link to the live sit, Usage instructions, if relevant, Unsolved problems etc.
+* A README.md file is in GitHub repository with: Explanations of the technologies used, Explanations of the approach taken, A link to the live site, Usage instructions, if relevant, Unsolved problems etc.
 * Use AJAX to make a request to an external data source like OMDBapi, and insert some of the data retrieved into the DOM.
 
 ## Objectives
@@ -34,6 +34,7 @@ The content, context, and objective of the application is entirely up to us. We 
 
 ### Executing program
 * https://github.com/Subash-Bhattachan/SB_SBA_320_H
+* https://weather-app-subash.netlify.app/
 * Run npm create vite@latest appName to create the React application
 * Go to the recently created directory
 * Run 'npm install' 
